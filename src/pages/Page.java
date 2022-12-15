@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Page {
     @Getter
-    protected String pageName;
+    protected String pageName = "";
     @Getter
     protected ArrayList<String> pagesAccessible = new ArrayList<>();
     @Getter

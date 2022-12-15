@@ -17,10 +17,10 @@ public class User {
     //tokens and shit
     private int tokensCount = 0;
     private int numFreePremiumMovies = 15;
-    private ArrayList<Movie> purchasedMovies;
-    private ArrayList<Movie> watchedMovies;
-    private ArrayList<Movie> likedMovies;
-    private ArrayList<Movie> ratedMovies;
+    private ArrayList<Movie> purchasedMovies = new ArrayList<>();
+    private ArrayList<Movie> watchedMovies = new ArrayList<>();
+    private ArrayList<Movie> likedMovies = new ArrayList<>();
+    private ArrayList<Movie> ratedMovies = new ArrayList<>();
 
 
     public User(String name, String password, String country, String accountType, int balance){

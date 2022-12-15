@@ -28,6 +28,10 @@ public final class Database {
         return instance;
     }
 
+    public static void removeInstance(){
+        instance = null;
+    }
+
     private Database() {
 
     }

@@ -24,13 +24,11 @@ public class LoginAction extends Action {
             newNode.put("error", "Error");
             ArrayNode outputArray = newNode.putArray("currentMoviesList");
             newNode.putNull("currentUser");
+            return;
         }
 
         String username = credentials.getName();
         String password = credentials.getPassword();
-        String country = credentials.getCountry();
-        String accountType = credentials.getAccountType();
-        int balance = credentials.getBalance();
 
         Database database = Database.getInstance();
         for (int i = 0; i < database.getUsers().size(); i++) {
@@ -42,50 +40,12 @@ public class LoginAction extends Action {
                 siteLogic.setCurrentUser(database.getUsers().get(i));
 
                 //show good output
-                ObjectNode newNode = SiteLogic.getInstance().getOutput().addObject();
-                newNode.putNull("error");
-                ArrayNode outputArray = newNode.putArray("currentMoviesList");
-                for (int j = 0; j < siteLogic.getCurrentPage().getMovieList().size(); j++) {
-                    Movie currentMovie = siteLogic.getCurrentPage().getMovieList().get(j);
-                    currentMovie.movieOutput(outputArray);
-                }
-                ObjectNode userNode = newNode.putObject("currentUser");
-                ObjectNode credentialsNode = userNode.putObject("credentials");
-                credentialsNode.put("name", username);
-                credentialsNode.put("password", password);
-                credentialsNode.put("accountType", country);
-                credentialsNode.put("country", accountType);
-                credentialsNode.put("balance", balance);
-                userNode.put("tokensCount", newUser.getTokensCount());
-                userNode.put("numFreePremiumMovies", newUser.getNumFreePremiumMovies());
-                ArrayNode purchasedArrayNode = userNode.putArray("purchasedMovies");
-                for (int j = 0; j < newUser.getPurchasedMovies().size(); j++) {
-                    Movie currentMovie = newUser.getPurchasedMovies().get(j);
-                    currentMovie.movieOutput(purchasedArrayNode);
-                }
-                ArrayNode watchedArrayNode = userNode.putArray("watchedMovies");
-                for (int j = 0; j < newUser.getWatchedMovies().size(); j++) {
-                    Movie currentMovie = newUser.getWatchedMovies().get(j);
-                    currentMovie.movieOutput(watchedArrayNode);
-                }
-                ArrayNode likedArrayNode = userNode.putArray("likedMovies");
-                for (int j = 0; j < newUser.getLikedMovies().size(); j++) {
-                    Movie currentMovie = newUser.getLikedMovies().get(j);
-                    currentMovie.movieOutput(likedArrayNode);
-                }
-                ArrayNode ratedArrayNode = userNode.putArray("ratedMovies");
-                for (int j = 0; j < newUser.getRatedMovies().size(); j++) {
-                    Movie currentMovie = newUser.getRatedMovies().get(j);
-                    currentMovie.movieOutput(ratedArrayNode);
-                }
+                SiteLogic.getInstance().showOutput();
                 return;
             }
         }
         // if username not found throw error and go on unauthenticated page
-        ObjectNode newNode = SiteLogic.getInstance().getOutput().addObject();
-        newNode.put("error", "Error");
-        ArrayNode outputArray = newNode.putArray("currentMoviesList");
-        newNode.putNull("currentUser");
+        SiteLogic.getInstance().showErrorOutput();
 
         Page newPage = PageFactory.createNew("unauthenticatedPage");
         siteLogic.setCurrentPage(newPage);

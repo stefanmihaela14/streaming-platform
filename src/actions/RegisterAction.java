@@ -22,6 +22,7 @@ public class RegisterAction extends Action {
             newNode.put("error", "Error");
             ArrayNode outputArray = newNode.putArray("currentMoviesList");
             newNode.putNull("currentUser");
+            return;
         }
         String username = credentials.getName();
         String password = credentials.getPassword();
@@ -34,34 +35,19 @@ public class RegisterAction extends Action {
             User randomUser = database.getUsers().get(i);
             if(username.equals(randomUser.getName())) {
                 ObjectNode newNode = SiteLogic.getInstance().getOutput().addObject();
-                newNode.put("error", "Error");
-                ArrayNode outputArray = newNode.putArray("currentMoviesList");
-                newNode.putNull("currentUser");
+                SiteLogic.getInstance().showErrorOutput();
 
                 Page newPage = PageFactory.createNew("unauthenticatedPage");
                 siteLogic.setCurrentPage(newPage);
-            } else {
-                User newUser = new User(username, password, country, accountType, balance);
-                database.addUser(newUser);
-
-                //show good output
-                ObjectNode newNode = SiteLogic.getInstance().getOutput().addObject();
-                newNode.putNull("error");
-                ArrayNode outputArray = newNode.putArray("currentMoviesList");
-                ObjectNode userNode = newNode.putObject("currentUser");
-                ObjectNode credentialsNode = userNode.putObject("credentials");
-                credentialsNode.put("name", username);
-                credentialsNode.put("password", password);
-                credentialsNode.put("accountType", country);
-                credentialsNode.put("country", accountType);
-                credentialsNode.put("balance", balance);
-                userNode.put("tokensCount", newUser.getTokensCount());
-                userNode.put("numFreePremiumMovies", newUser.getNumFreePremiumMovies());
-                ArrayNode purchasedArray = userNode.putArray("purchasedMovies");
-                ArrayNode watchedArray = userNode.putArray("watchedMovies");
-                ArrayNode likedArray = userNode.putArray("likedMovies");
-                ArrayNode ratedArray = userNode.putArray("ratedMovies");
+                return;
             }
         }
+        User newUser = new User(username, password, country, accountType, balance);
+        database.addUser(newUser);
+        SiteLogic.getInstance().setCurrentUser(newUser);
+        Page newPage = PageFactory.createNew("authenticatedPage");
+        siteLogic.setCurrentPage(newPage);
+        //show good output
+        SiteLogic.getInstance().showOutput();
     }
 }

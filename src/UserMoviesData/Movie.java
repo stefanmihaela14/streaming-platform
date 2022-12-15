@@ -19,7 +19,7 @@ public class Movie {
     private ArrayList<String> countriesBanned;
 
     private int numLikes = 0;
-    private double rating = 0;
+    private Double rating = 0d;
     private int numRatings = 0;
 
     public Movie(MovieInput movie) {
