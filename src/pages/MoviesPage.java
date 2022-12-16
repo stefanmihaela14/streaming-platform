@@ -10,7 +10,5 @@ public class MoviesPage extends Page {
         pagesAccessible.add("upgrades");
         pagesAccessible.add("movies");
 
-        pageWithMovies = 1;
-        loggedUser = 1;
     }
 }

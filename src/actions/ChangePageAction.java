@@ -36,9 +36,6 @@ public class ChangePageAction extends Action{
                     }
                     SiteLogic.getInstance().showOutput();
                 }
-                if (newPage.getPageName().equals("see details")) {
-                    SiteLogic.getInstance().showOutput();
-                }
                 return;
             }
         }

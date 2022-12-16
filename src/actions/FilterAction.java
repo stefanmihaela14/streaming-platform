@@ -21,10 +21,7 @@ public class FilterAction extends Action {
     public void doAction(SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
         if(!name.equals("movies")) {
-            ObjectNode newNode = SiteLogic.getInstance().getOutput().addObject();
-            newNode.put("error", "Error");
-            ArrayNode outputArray = newNode.putArray("currentMoviesList");
-            newNode.putNull("currentUser");
+            site.showErrorOutput();
             return;
         }
 

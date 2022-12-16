@@ -34,7 +34,7 @@ public class LoginAction extends Action {
         for (int i = 0; i < database.getUsers().size(); i++) {
             User randomUser = database.getUsers().get(i);
             if (username.equals(randomUser.getName()) && password.equals(randomUser.getPassword())){
-                Page newPage = PageFactory.createNew("login");
+                Page newPage = PageFactory.createNew("authenticatedPage");
                 siteLogic.setCurrentPage(newPage);
                 User newUser = database.getUsers().get(i);
                 siteLogic.setCurrentUser(database.getUsers().get(i));

@@ -5,9 +5,5 @@ public class RegisterPage extends Page {
         pageName = "register";
 
         pagesAccessible.add("login");
-        actionsAccessible.add("register");
-
-        pageWithMovies = 0;
-        loggedUser = 0;
     }
 }

@@ -9,10 +9,6 @@ public class UnauthenticatedPage extends Page {
 
         pagesAccessible.add("login");
         pagesAccessible.add("register");
-
-        pageWithMovies = 0;
-
-        loggedUser = 0;
     }
 
 }

@@ -1,6 +1,7 @@
 package actions;
 
 import datainput.ActionsInput;
+import pages.UpgradesPage;
 
 public class ActionFactory {
     public static Action createNew(ActionsInput input){
@@ -14,6 +15,8 @@ public class ActionFactory {
             return new SearchAction(input);
         } else if (input.getType().equals("on page") && input.getFeature().equals("filter")) {
             return new FilterAction(input);
+        } else if (input.getType().equals("change page") && input.getPage().equals("see details")) {
+            return new SeeDetailsAction(input);
         }
         else if (input.getType().equals("change page")) {
             return new ChangePageAction(input);

@@ -13,8 +13,10 @@ public class PageFactory {
         } else if (pageName.equals("unauthenticatedPage")){
             return new UnauthenticatedPage();
         } else if (pageName.equals("movies")){
-        return new MoviesPage();
-    }
+            return new MoviesPage();
+        } else if (pageName.equals("seeDetails")){
+            return new SeeDetailsPage();
+        }
 
         return null;
     }
