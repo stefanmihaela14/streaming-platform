@@ -12,6 +12,8 @@ public class ActionFactory {
             return new LogoutAction(input);
         } else if (input.getType().equals("on page") && input.getFeature().equals("search")) {
             return new SearchAction(input);
+        } else if (input.getType().equals("on page") && input.getFeature().equals("filter")) {
+            return new FilterAction(input);
         }
         else if (input.getType().equals("change page")) {
             return new ChangePageAction(input);
