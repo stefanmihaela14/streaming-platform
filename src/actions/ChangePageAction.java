@@ -1,6 +1,9 @@
 package actions;
 
+import UserMoviesData.Movie;
+import UserMoviesData.User;
 import datainput.ActionsInput;
+import logicAndFunctionalities.Database;
 import logicAndFunctionalities.SiteLogic;
 import pages.Page;
 import pages.PageFactory;
@@ -23,7 +26,17 @@ public class ChangePageAction extends Action{
         for (int i = 0; i < currentPage.getPagesAccessible().size(); i++) {
             if (newPage.getPageName().equals(pagesAccessible.get(i))) {
                 siteLogic.setCurrentPage(newPage);
-                if (newPage.getPageName().equals("movies") || newPage.getPageName().equals("see details")) {
+                if (newPage.getPageName().equals("movies")) {
+                    User currentUser = SiteLogic.getInstance().getCurrentUser();
+                    for (int j = 0; j < Database.getInstance().getMovies().size(); j++) {
+                        Movie currentMovie = Database.getInstance().getMovies().get(j);
+                        if (!currentMovie.getCountriesBanned().contains(currentUser.getCountry())) {
+                            newPage.getMovieList().add(currentMovie);
+                        }
+                    }
+                    SiteLogic.getInstance().showOutput();
+                }
+                if (newPage.getPageName().equals("see details")) {
                     SiteLogic.getInstance().showOutput();
                 }
                 return;

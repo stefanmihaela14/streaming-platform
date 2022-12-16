@@ -10,6 +10,8 @@ public class ActionFactory {
             return new RegisterAction(input);
         } else if (input.getType().equals("change page") && input.getPage().equals("logout")) {
             return new LogoutAction(input);
+        } else if (input.getType().equals("on page") && input.getFeature().equals("search")) {
+            return new SearchAction(input);
         }
         else if (input.getType().equals("change page")) {
             return new ChangePageAction(input);

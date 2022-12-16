@@ -12,7 +12,9 @@ public class PageFactory {
             return new AuthenticatedPage();
         } else if (pageName.equals("unauthenticatedPage")){
             return new UnauthenticatedPage();
-        }
+        } else if (pageName.equals("movies")){
+        return new MoviesPage();
+    }
 
         return null;
     }

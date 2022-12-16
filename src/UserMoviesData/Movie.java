@@ -19,7 +19,7 @@ public class Movie {
     private ArrayList<String> countriesBanned;
 
     private int numLikes = 0;
-    private Double rating = 0d;
+    private Double rating = 0.00;
     private int numRatings = 0;
 
     public Movie(MovieInput movie) {
@@ -28,13 +28,14 @@ public class Movie {
         this.actors = new ArrayList<String>(movie.getActors());
         this.genres = new ArrayList<String>(movie.getGenres());
         this.countriesBanned = new ArrayList<String>(movie.getCountriesBanned());
+        this.duration = movie.getDuration();
     }
     
     public void movieOutput(ArrayNode arrayNode) {
         ObjectNode newMovieNode = arrayNode.addObject();
         newMovieNode.put("name", this.getName());
-        newMovieNode.put("year", this.getName());
-        newMovieNode.put("duration", this.getName());
+        newMovieNode.put("year", this.getYear());
+        newMovieNode.put("duration", this.getDuration());
         ArrayNode genresArray = newMovieNode.putArray("genres");
         for (int k = 0; k < this.getGenres().size(); k++) {
             genresArray.add(this.getGenres().get(k));
@@ -45,10 +46,10 @@ public class Movie {
         }
         ArrayNode countriesBannedArray = newMovieNode.putArray("countriesBanned");
         for (int k = 0; k < this.getCountriesBanned().size(); k++) {
-            genresArray.add(this.getCountriesBanned().get(k));
+            countriesBannedArray.add(this.getCountriesBanned().get(k));
         }
         newMovieNode.put("numLikes", this.getNumLikes());
-        newMovieNode.put("rating", this.getRating());
+        newMovieNode.put("rating", rating);
         newMovieNode.put("numRatings", this.getNumRatings());
     }
 }
