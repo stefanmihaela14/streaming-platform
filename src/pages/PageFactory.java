@@ -16,6 +16,8 @@ public class PageFactory {
             return new MoviesPage();
         } else if (pageName.equals("seeDetails")){
             return new SeeDetailsPage();
+        } else if (pageName.equals("upgrades")){
+            return new UpgradesPage();
         }
 
         return null;

@@ -22,6 +22,8 @@ public class Movie {
     private Double rating = 0.00;
     private int numRatings = 0;
 
+    private ArrayList<Integer> ratingsList = new ArrayList<>();
+
     public Movie(MovieInput movie) {
         this.name = movie.getName();
         this.year = movie.getYear();

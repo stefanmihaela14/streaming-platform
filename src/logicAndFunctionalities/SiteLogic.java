@@ -63,7 +63,7 @@ public class SiteLogic {
             database.addUser(newUser);
         }
         ArrayList<MovieInput> movieInput = inputData.getMovies();
-        for (int i = 0; i < userInput.size(); i++) {
+        for (int i = 0; i < movieInput.size(); i++) {
             Movie newMovie = new Movie(movieInput.get(i));
             database.addMovie(newMovie);
         }

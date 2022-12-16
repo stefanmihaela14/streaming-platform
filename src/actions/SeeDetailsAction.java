@@ -28,7 +28,7 @@ public class SeeDetailsAction extends Action {
             if (currentMovie.getName().equals(movie)) {
                 Page newPage = PageFactory.createNew("seeDetails");
                 site.setCurrentPage(newPage);
-                currentPage.getMovieList().add(currentMovie);
+                site.getCurrentPage().getMovieList().add(currentMovie);
                 site.showOutput();
                 return;
             }

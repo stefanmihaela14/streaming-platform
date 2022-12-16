@@ -1,13 +1,11 @@
 package actions;
 
 import UserMoviesData.User;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import datainput.ActionsInput;
 import logicAndFunctionalities.SiteLogic;
 
-public class BuyTokensAction extends Action{
-    public BuyTokensAction(ActionsInput input) {
+public class BuyPremiumAccountAction extends Action{
+    public BuyPremiumAccountAction(ActionsInput input) {
         super(input);
     }
 
@@ -21,19 +19,19 @@ public class BuyTokensAction extends Action{
 
         User currentUser = site.getCurrentUser();
         int userTokensCount = currentUser.getTokensCount();
-        int noTokensToBuy = count;
-        int balance = currentUser.getBalance();
 
-        if (balance < noTokensToBuy) {
-            site.showErrorOutput();
-            return;
-        }
-        if (noTokensToBuy < 0) {
+        if (currentUser.getAccountType().equals("premium")) {
             site.showErrorOutput();
             return;
         }
 
-        currentUser.setTokensCount(userTokensCount + noTokensToBuy);
-        currentUser.setBalance(balance - noTokensToBuy);
+        if (userTokensCount < 10) {
+            site.showErrorOutput();
+            return;
+        }
+
+        currentUser.setTokensCount(userTokensCount - 10);
+
+        currentUser.setAccountType("premium");
     }
 }
