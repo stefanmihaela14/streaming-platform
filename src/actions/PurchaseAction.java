@@ -1,18 +1,25 @@
 package actions;
 
-import UserMoviesData.Movie;
-import UserMoviesData.User;
+import usermoviesdata.User;
 import datainput.ActionsInput;
-import logicAndFunctionalities.SiteLogic;
+import logic.SiteLogic;
 import pages.Page;
 
-public class PurchaseAction extends Action{
-    public PurchaseAction(ActionsInput input) {
+public class PurchaseAction extends Action {
+
+    public PurchaseAction(final ActionsInput input) {
         super(input);
     }
 
+    /**
+     * Implement the logic for buying a movie.
+     * Verify if the action can be done from the current page.
+     * Verify if the movie is already bought and if not, add it to
+     * the purchasedMovie list.
+     * @param site the object which is being modified
+     */
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
         if (!name.equals("seeDetails")) {
             site.showErrorOutput();

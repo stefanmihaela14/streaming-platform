@@ -1,25 +1,24 @@
 package pages;
 
-public class PageFactory {
-    public static Page createNew(String pageName){
-        if (pageName.equals("login")){
-            return new LoginPage();
-        } else if (pageName.equals("register")) {
-            return new RegisterPage();
-        } else if (pageName.equals("logout")){
-            return new LogoutPage();
-        } else if (pageName.equals("authenticatedPage")){
-            return new AuthenticatedPage();
-        } else if (pageName.equals("unauthenticatedPage")){
-            return new UnauthenticatedPage();
-        } else if (pageName.equals("movies")){
-            return new MoviesPage();
-        } else if (pageName.equals("seeDetails")){
-            return new SeeDetailsPage();
-        } else if (pageName.equals("upgrades")){
-            return new UpgradesPage();
-        }
+public final class PageFactory {
+    private PageFactory() {
+    }
 
-        return null;
+    /**
+     * Turns the page received into a specific page class
+     */
+    public static Page createNew(final String pageName) {
+        return switch (pageName) {
+            case "login" -> new LoginPage();
+            case "register" -> new RegisterPage();
+            case "logout" -> new LogoutPage();
+            case "authenticatedPage" -> new AuthenticatedPage();
+            case "unauthenticatedPage" -> new UnauthenticatedPage();
+            case "movies" -> new MoviesPage();
+            case "seeDetails" -> new SeeDetailsPage();
+            case "upgrades" -> new UpgradesPage();
+            default -> null;
+        };
+
     }
 }

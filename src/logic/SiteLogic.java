@@ -1,7 +1,7 @@
-package logicAndFunctionalities;
+package logic;
 
-import UserMoviesData.Movie;
-import UserMoviesData.User;
+import usermoviesdata.Movie;
+import usermoviesdata.User;
 import actions.Action;
 import actions.ActionFactory;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -17,7 +17,7 @@ import pages.PageFactory;
 
 import java.util.ArrayList;
 
-public class SiteLogic {
+public final class SiteLogic {
     @Getter
     private ArrayNode output;
     @Getter
@@ -35,7 +35,10 @@ public class SiteLogic {
 
     private static SiteLogic instance;
 
-    public static void removeInstance(){
+    /**
+     * delete the instance after each test due to singleton use
+     */
+    public static void removeInstance() {
         instance = null;
     }
     /**
@@ -51,9 +54,16 @@ public class SiteLogic {
     private SiteLogic() {
     }
 
-    public void startSite(ArrayNode output, Input inputData) {
-        this.output = output;
-        this.inputData = inputData;
+    /**
+     * Keeps the current page and user, adds the users and movies in the database
+     * and runs the actions.
+     * Starts form unauthenticated page
+     * @param myOutput arrayNode in which outputs nodes are put
+     * @param myInputData the data that we put in the database
+     */
+    public void startSite(final ArrayNode myOutput, final Input myInputData) {
+        output = myOutput;
+        inputData = myInputData;
         currentPage = PageFactory.createNew("unauthenticatedPage");
         currentUser = null;
         database = Database.getInstance();
@@ -69,20 +79,25 @@ public class SiteLogic {
         }
 
         ArrayList<ActionsInput> actionsInputs = inputData.getActions();
-        for(int i = 0; i < actionsInputs.size(); i++){
+        for (int i = 0; i < actionsInputs.size(); i++) {
             Action newAction = ActionFactory.createNew(actionsInputs.get(i));
-            if(newAction == null){
+            if (newAction == null) {
                 continue;
             }
             receiveAction(newAction);
         }
-
     }
 
-    public void receiveAction(Action action){
+    /**
+     * accepts a visitor-type object and runs it
+     */
+    public void receiveAction(final Action action) {
         action.doAction(this);
     }
 
+    /**
+     * output for error
+     */
     public void showErrorOutput() {
         ObjectNode newNode = SiteLogic.getInstance().getOutput().addObject();
 
@@ -91,6 +106,9 @@ public class SiteLogic {
         newNode.putNull("currentUser");
     }
 
+    /**
+     * output for current user
+     */
     public void showOutput() {
         User newUser = currentUser;
 

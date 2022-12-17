@@ -1,7 +1,6 @@
 package pages;
 
-import UserMoviesData.Movie;
-import actions.Action;
+import usermoviesdata.Movie;;
 import lombok.Getter;
 import lombok.Setter;
 

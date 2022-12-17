@@ -1,21 +1,28 @@
 package actions;
 
-import UserMoviesData.Movie;
-import UserMoviesData.User;
+import usermoviesdata.Movie;
+import usermoviesdata.User;
 import datainput.ActionsInput;
-import logicAndFunctionalities.SiteLogic;
+import logic.SiteLogic;
 import pages.Page;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RateAction extends Action {
+    private static final int MAX_RATE = 5;
 
-    public RateAction(ActionsInput input) {
+    public RateAction(final ActionsInput input) {
         super(input);
     }
 
+    /**
+     * Implement the logic for rating a movie
+     * Verify if the action can be done from the current page.
+     * Verify if the grade is lower than 5 and recalculate the movie rating average
+     * @param site the object which is being modified
+     */
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
         if (!name.equals("seeDetails")) {
             site.showErrorOutput();
@@ -33,7 +40,7 @@ public class RateAction extends Action {
             site.showErrorOutput();
             return;
         }
-        if(rate > 5 || rate<0){
+        if (rate > MAX_RATE || rate < 0) {
             site.showErrorOutput();
             return;
         }
@@ -43,9 +50,9 @@ public class RateAction extends Action {
         currentMovie.setNumRatings(currentMovie.getNumRatings() + 1);
         AtomicInteger sum = new AtomicInteger();
         currentMovie.getRatingsList().forEach((integer -> {
-            sum.set(sum.get() + integer);}));
+            sum.set(sum.get() + integer); }));
 
-        currentMovie.setRating((double)sum.get() / (double) currentMovie.getNumRatings());
+        currentMovie.setRating((double) sum.get() / (double) currentMovie.getNumRatings());
         site.showOutput();
     }
 }

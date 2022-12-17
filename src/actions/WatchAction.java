@@ -1,17 +1,23 @@
 package actions;
 
-import UserMoviesData.User;
+import usermoviesdata.User;
 import datainput.ActionsInput;
-import logicAndFunctionalities.SiteLogic;
+import logic.SiteLogic;
 import pages.Page;
 
-public class WatchAction extends Action{
-    public WatchAction(ActionsInput input) {
+public class WatchAction extends Action {
+    public WatchAction(final ActionsInput input) {
         super(input);
     }
 
+    /**
+     * Implement the logic for when a user watches a movie.
+     * Verify if the action can be done from the current page.
+     * Add the movie to the current user's watchedMovies list.
+     * @param site the object which is being modified
+     */
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
         if (!name.equals("seeDetails")) {
             site.showErrorOutput();

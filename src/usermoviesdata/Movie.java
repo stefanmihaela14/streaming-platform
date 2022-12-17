@@ -1,4 +1,4 @@
-package UserMoviesData;
+package usermoviesdata;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class Movie {
 
     private ArrayList<Integer> ratingsList = new ArrayList<>();
 
-    public Movie(MovieInput movie) {
+    public Movie(final MovieInput movie) {
         this.name = movie.getName();
         this.year = movie.getYear();
         this.actors = new ArrayList<String>(movie.getActors());
@@ -32,8 +32,12 @@ public class Movie {
         this.countriesBanned = new ArrayList<String>(movie.getCountriesBanned());
         this.duration = movie.getDuration();
     }
-    
-    public void movieOutput(ArrayNode arrayNode) {
+
+    /**
+     * Output for showing the list of movies that can be seen on the current page
+     * @param arrayNode where we add the output
+     */
+    public void movieOutput(final ArrayNode arrayNode) {
         ObjectNode newMovieNode = arrayNode.addObject();
         newMovieNode.put("name", this.getName());
         newMovieNode.put("year", this.getYear());

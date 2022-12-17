@@ -1,23 +1,31 @@
 package actions;
 
-import UserMoviesData.User;
+import usermoviesdata.User;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import datainput.ActionsInput;
-import logicAndFunctionalities.Database;
-import logicAndFunctionalities.SiteLogic;
+import logic.Database;
+import logic.SiteLogic;
 import pages.Page;
 import pages.PageFactory;
 
 public class RegisterAction extends Action {
-    public RegisterAction(ActionsInput input) {
+    public RegisterAction(final ActionsInput input) {
         super(input);
     }
+
+    /**
+     * Implement the logic for register
+     * Verify if the action can be done from the current page.
+     * Verify if the credentials already exist, if yes show error.
+     * Add the new user to the data base
+     * @param site the object which is being modified
+     */
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         SiteLogic siteLogic = SiteLogic.getInstance();
         String name = siteLogic.getCurrentPage().getPageName();
-        if(!name.equals("register")) {
+        if (!name.equals("register")) {
             ObjectNode newNode = SiteLogic.getInstance().getOutput().addObject();
             newNode.put("error", "Error");
             ArrayNode outputArray = newNode.putArray("currentMoviesList");
@@ -33,7 +41,7 @@ public class RegisterAction extends Action {
         Database database = Database.getInstance();
         for (int i = 0; i < database.getUsers().size(); i++) {
             User randomUser = database.getUsers().get(i);
-            if(username.equals(randomUser.getName())) {
+            if (username.equals(randomUser.getName())) {
                 ObjectNode newNode = SiteLogic.getInstance().getOutput().addObject();
                 SiteLogic.getInstance().showErrorOutput();
 

@@ -1,6 +1,6 @@
-package logicAndFunctionalities;
-import UserMoviesData.Movie;
-import UserMoviesData.User;
+package logic;
+import usermoviesdata.Movie;
+import usermoviesdata.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,18 +28,30 @@ public final class Database {
         return instance;
     }
 
-    public static void removeInstance(){
+    /**
+     * Delete the data in the database after each test due to singleton use
+     */
+    public static void removeInstance() {
         instance = null;
     }
 
     private Database() {
 
     }
-    public void addUser(User user) {
+
+    /**
+     * Add a new user to the database
+     * @param user the user to be added to the database
+     */
+    public void addUser(final User user) {
         users.add(user);
     }
 
-    public void addMovie(Movie movie) {
+    /**
+     * Add a new movie to the database
+     * @param movie the movie to be added to the database
+     */
+    public void addMovie(final Movie movie) {
         movies.add(movie);
     }
 }

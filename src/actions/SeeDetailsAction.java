@@ -1,23 +1,25 @@
 package actions;
 
-import UserMoviesData.Movie;
-import UserMoviesData.User;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import usermoviesdata.Movie;
 import datainput.ActionsInput;
-import logicAndFunctionalities.SiteLogic;
+import logic.SiteLogic;
 import pages.Page;
 import pages.PageFactory;
 
 public class SeeDetailsAction extends Action {
-    public SeeDetailsAction(ActionsInput input) {
+    public SeeDetailsAction(final ActionsInput input) {
         super(input);
     }
 
+    /**
+     * Implement the logic for seeing moving to the page seeDetails.
+     * Verify if the action can be done from the current page.
+     * @param site the object which is being modified
+     */
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
-        if(!name.equals("movies")) {
+        if (!name.equals("movies")) {
             site.showErrorOutput();
             return;
         }

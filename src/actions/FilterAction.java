@@ -1,26 +1,31 @@
 package actions;
 
-import UserMoviesData.Movie;
-import UserMoviesData.User;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import usermoviesdata.Movie;
+import usermoviesdata.User;
 import datainput.ActionsInput;
-import logicAndFunctionalities.Database;
-import logicAndFunctionalities.SiteLogic;
+import logic.Database;
+import logic.SiteLogic;
 import pages.Page;
 
 import java.util.ArrayList;
 
 public class FilterAction extends Action {
 
-    public FilterAction(ActionsInput input) {
+    public FilterAction(final ActionsInput input) {
         super(input);
     }
 
+    /**
+     * Implement the logic for filtering movies after rating and duration or actors/genre contained
+     * Verify if the action can be done from the current page.
+     * Remove the movies that do not contain actors/genre wanted
+     * Sort the remaining movies by rating and duration
+     * @param site the object which is being modified
+     */
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
-        if(!name.equals("movies")) {
+        if (!name.equals("movies")) {
             site.showErrorOutput();
             return;
         }
@@ -44,12 +49,13 @@ public class FilterAction extends Action {
                 if (filters.getContains().getActors() != null) {
                     boolean notFoundActor = false;
                     for (int j = 0; j < filters.getContains().getActors().size(); j++) {
-                        if (!movieListCopy.get(i).getActors().contains(filters.getContains().getActors().get(j))){
+                        ArrayList<String> actors = movieListCopy.get(i).getActors();
+                        if (!actors.contains(filters.getContains().getActors().get(j))) {
                             notFoundActor = true;
                             break;
                         }
                     }
-                    if(notFoundActor){
+                    if (notFoundActor) {
                         movieList.remove(movieListCopy.get(i));
                         continue;
                     }
@@ -57,12 +63,13 @@ public class FilterAction extends Action {
                 if (filters.getContains().getGenre() != null) {
                     boolean notFoundGenre = false;
                     for (int j = 0; j < filters.getContains().getGenre().size(); j++) {
-                        if (!movieListCopy.get(i).getGenres().contains(filters.getContains().getGenre().get(j))){
+                        ArrayList<String> genres = movieListCopy.get(i).getGenres();
+                        if (!genres.contains(filters.getContains().getGenre().get(j))) {
                             notFoundGenre = true;
                             break;
                         }
                     }
-                    if(notFoundGenre){
+                    if (notFoundGenre) {
                         movieList.remove(movieListCopy.get(i));
                         continue;
                     }
@@ -70,62 +77,58 @@ public class FilterAction extends Action {
             }
         }
         if (filters.getSort() != null) {
-            if (filters.getSort().getRating() == null){
+            if (filters.getSort().getRating() == null) {
                 if (filters.getSort().getDuration().equals("increasing")) {
-                    movieList.sort((m1, m2) -> {return m1.getDuration() - m2.getDuration();});
+                    movieList.sort((m1, m2) -> {
+                        return m1.getDuration() - m2.getDuration(); });
+                } else {
+                    movieList.sort((m1, m2) -> {
+                        return m2.getDuration() - m1.getDuration(); });
                 }
-                else{
-                    movieList.sort((m1, m2) -> {return m2.getDuration() - m1.getDuration();});
-                }
-            }
-            else if (filters.getSort().getDuration() == null) {
+            } else if (filters.getSort().getDuration() == null) {
                 if (filters.getSort().getRating().equals("increasing")) {
-                    movieList.sort((m1, m2) -> {return m1.getRating().compareTo(m2.getRating());});
+                    movieList.sort((m1, m2) -> {
+                        return m1.getRating().compareTo(m2.getRating()); });
+                } else {
+                    movieList.sort((m1, m2) -> {
+                        return m2.getRating().compareTo(m1.getRating()); });
                 }
-                else{
-                    movieList.sort((m1, m2) -> {return m2.getRating().compareTo(m1.getRating());});
-                }
-            }
-            else {
+            } else {
                 String ratingFilter = filters.getSort().getRating();
                 String durationFilter = filters.getSort().getDuration();
 
                 if (ratingFilter.equals("increasing") && durationFilter.equals("increasing")) {
                     movieList.sort((m1, m2) -> {
-                        if(m1.getDuration() != m2.getDuration()){
+                        if (m1.getDuration() != m2.getDuration()) {
                             return m1.getDuration() - m2.getDuration();
-                        }
-                        else {
+                        } else {
                             return m1.getRating().compareTo(m2.getRating());
                         }
                     });
                 }
                 if (ratingFilter.equals("increasing") && durationFilter.equals("decreasing")) {
                     movieList.sort((m1, m2) -> {
-                        if(m1.getDuration() != m2.getDuration()){
+                        if (m1.getDuration() != m2.getDuration()) {
                             return m2.getDuration() - m1.getDuration();
-                        }
-                        else{
+                        } else {
                             return m1.getRating().compareTo(m2.getRating());
                         }
                     });
                 }
                 if (ratingFilter.equals("decreasing") && durationFilter.equals("increasing")) {
                     movieList.sort((m1, m2) -> {
-                        if(m1.getDuration() != m2.getDuration()){
+                        if (m1.getDuration() != m2.getDuration()) {
                             return m1.getDuration() - m2.getDuration();
-                        }
-                        else{
+                        } else {
                             return m2.getRating().compareTo(m1.getRating());
                         }
                     });
                 }
                 if (ratingFilter.equals("decreasing") && durationFilter.equals("decreasing")) {
                     movieList.sort((m1, m2) -> {
-                        if(m1.getDuration() != m2.getDuration()){
+                        if (m1.getDuration() != m2.getDuration()) {
                             return m2.getDuration() - m1.getDuration();
-                        }
-                        else{
+                        } else {
                             return m2.getRating().compareTo(m1.getRating());
                         }
                     });

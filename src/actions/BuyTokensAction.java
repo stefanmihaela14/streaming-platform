@@ -1,18 +1,25 @@
 package actions;
 
-import UserMoviesData.User;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import datainput.ActionsInput;
-import logicAndFunctionalities.SiteLogic;
+import usermoviesdata.User;
 
-public class BuyTokensAction extends Action{
-    public BuyTokensAction(ActionsInput input) {
+import datainput.ActionsInput;
+import logic.SiteLogic;
+
+public class BuyTokensAction extends Action {
+    public BuyTokensAction(final ActionsInput input) {
         super(input);
     }
 
+    /**
+     * Implement the logic for buying a premium tokens.
+     * Verify if the action can be done from the current page.
+     * Verify if user is standard or premium and if it's standard we decrease it's
+     * number of tokens and if it's premium before decreasing the number of tokens
+     * we decrease the number of free movies.
+     * @param site the object which is being modified
+     */
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
         if (!name.equals("upgrades")) {
             site.showErrorOutput();

@@ -1,31 +1,31 @@
 package actions;
 
-import UserMoviesData.Movie;
-import UserMoviesData.User;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import usermoviesdata.Movie;
+import usermoviesdata.User;
 import datainput.ActionsInput;
-import logicAndFunctionalities.Database;
-import logicAndFunctionalities.SiteLogic;
+import logic.Database;
+import logic.SiteLogic;
 import pages.Page;
 
 import java.util.ArrayList;
 
 public class SearchAction extends Action {
 
-    public SearchAction(ActionsInput input) {
+    public SearchAction(final ActionsInput input) {
         super(input);
     }
 
+    /**
+     * Implement the logic for when a searching a movie after a string.
+     * Verify if the action can be done from the current page.
+     * Remove from the movieList the movies that do not contain the searched string
+     * @param site the object which is being modified
+     */
     @Override
-    public void doAction(SiteLogic site) {
-        //System.out.println("cevaaaa ajunge aici");
+    public void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
-        if(!name.equals("movies")) {
-            ObjectNode newNode = SiteLogic.getInstance().getOutput().addObject();
-            newNode.put("error", "Error");
-            ArrayNode outputArray = newNode.putArray("currentMoviesList");
-            newNode.putNull("currentUser");
+        if (!name.equals("movies")) {
+            site.showErrorOutput();
             return;
         }
 

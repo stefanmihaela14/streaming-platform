@@ -1,23 +1,28 @@
 package actions;
 
-import UserMoviesData.Movie;
-import UserMoviesData.User;
+import usermoviesdata.Movie;
+import usermoviesdata.User;
 import datainput.ActionsInput;
-import logicAndFunctionalities.Database;
-import logicAndFunctionalities.SiteLogic;
+import logic.Database;
+import logic.SiteLogic;
 import pages.Page;
 import pages.PageFactory;
 
 import java.util.ArrayList;
 
-public class ChangePageAction extends Action{
+public class ChangePageAction extends Action {
 
-    public ChangePageAction(ActionsInput input) {
+    public ChangePageAction(final ActionsInput input) {
         super(input);
     }
 
+    /**
+     * Implement the logic for changing the current page
+     * Verify if the action can be done from the current page.
+     * @param site the object which is being modified
+     */
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         SiteLogic siteLogic = SiteLogic.getInstance();
         Page currentPage = SiteLogic.getInstance().getCurrentPage();
         Page newPage = PageFactory.createNew(page);

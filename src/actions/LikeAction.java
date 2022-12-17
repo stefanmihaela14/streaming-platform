@@ -1,18 +1,25 @@
 package actions;
 
-import UserMoviesData.Movie;
-import UserMoviesData.User;
+import usermoviesdata.Movie;
+import usermoviesdata.User;
 import datainput.ActionsInput;
-import logicAndFunctionalities.SiteLogic;
+import logic.SiteLogic;
 import pages.Page;
 
-public class LikeAction extends Action{
-    public LikeAction(ActionsInput input) {
+public class LikeAction extends Action {
+    public LikeAction(final ActionsInput input) {
         super(input);
     }
 
+    /**
+     * Implement the logic for liking a movie
+     * Verify if the action can be done from the current page.
+     * Verify if user has already liked the movie and if not add it to
+     * the likedMovies list
+     * @param site the object which is being modified
+     */
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
         if (!name.equals("seeDetails")) {
             site.showErrorOutput();

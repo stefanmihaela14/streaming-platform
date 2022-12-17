@@ -3,7 +3,7 @@ package actions;
 import datainput.ActionsInput;
 import datainput.CredentialsInput;
 import datainput.FiltersInput;
-import logicAndFunctionalities.SiteLogic;
+import logic.SiteLogic;
 
 /*
  * Parent class for the other actions
@@ -20,7 +20,7 @@ public abstract class Action {
     protected int rate;
     protected int count;
 
-    public Action(ActionsInput input){
+    public Action(final ActionsInput input) {
         type = input.getType();
         page = input.getPage();
         feature = input.getFeature();
@@ -32,6 +32,11 @@ public abstract class Action {
         rate = input.getRate();
         count = input.getCount();
     }
-    abstract public void doAction(SiteLogic site);
+
+    /**
+     * Implement the logic for different actions
+     * @param site the object which is being modified
+     */
+    public abstract void doAction(SiteLogic site);
 
 }
