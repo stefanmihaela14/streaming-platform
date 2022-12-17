@@ -7,5 +7,6 @@ public class AuthenticatedPage extends Page {
         pagesAccessible.add("movies");
         pagesAccessible.add("upgrades");
         pagesAccessible.add("logout");
+        pagesAccessible.add("authenticatedPage");
     }
 }

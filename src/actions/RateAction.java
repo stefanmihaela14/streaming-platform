@@ -33,6 +33,10 @@ public class RateAction extends Action {
             site.showErrorOutput();
             return;
         }
+        if(rate > 5 || rate<0){
+            site.showErrorOutput();
+            return;
+        }
         Movie currentMovie = currentPage.getMovieList().get(0);
         currentMovie.getRatingsList().add(rate);
         currentUser.getRatedMovies().add(currentMovie);

@@ -9,6 +9,7 @@ public class UnauthenticatedPage extends Page {
 
         pagesAccessible.add("login");
         pagesAccessible.add("register");
+        pagesAccessible.add("unauthenticatedPage");
     }
 
 }

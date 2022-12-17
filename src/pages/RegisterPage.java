@@ -5,5 +5,6 @@ public class RegisterPage extends Page {
         pageName = "register";
 
         pagesAccessible.add("login");
+        pagesAccessible.add("unauthenticatedPage");
     }
 }
