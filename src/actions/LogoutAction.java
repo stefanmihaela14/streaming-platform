@@ -32,6 +32,8 @@ public class LogoutAction extends Action {
 
         Page newPage = PageFactory.createNew("unauthenticatedPage");
         site.setCurrentPage(newPage);
+        site.getCurrentUser().getVisitedPagesStack().clear();
         site.setCurrentUser(null);
+
     }
 }

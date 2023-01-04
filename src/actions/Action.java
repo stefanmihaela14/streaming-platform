@@ -20,6 +20,8 @@ public abstract class Action {
     protected int rate;
     protected int count;
 
+    protected String subscribedGenre;
+
     public Action(final ActionsInput input) {
         type = input.getType();
         page = input.getPage();
@@ -31,6 +33,7 @@ public abstract class Action {
         filters = input.getFilters();
         rate = input.getRate();
         count = input.getCount();
+        subscribedGenre = input.getSubscribedGenre();
     }
 
     /**

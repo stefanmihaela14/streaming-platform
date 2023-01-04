@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 @Setter
 @Getter
@@ -15,7 +16,10 @@ public class User {
     private String country;
     private int balance;
 
-    //tokens and shit
+    private ArrayList<Notification> notifications = new ArrayList<Notification>();
+
+    private LinkedList<String> visitedPagesStack = new LinkedList<>();
+
     private int tokensCount = 0;
     private int numFreePremiumMovies = NUM_FREE_MOVIES_START;
     private ArrayList<Movie> purchasedMovies = new ArrayList<>();

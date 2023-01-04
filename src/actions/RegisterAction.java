@@ -55,7 +55,7 @@ public class RegisterAction extends Action {
         SiteLogic.getInstance().setCurrentUser(newUser);
         Page newPage = PageFactory.createNew("authenticatedPage");
         siteLogic.setCurrentPage(newPage);
-        //show good output
+
         SiteLogic.getInstance().showOutput();
     }
 }

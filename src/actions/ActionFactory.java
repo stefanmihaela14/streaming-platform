@@ -42,6 +42,10 @@ public final class ActionFactory {
             return new RateAction(input);
         } else if (input.getType().equals("change page")) {
             return new ChangePageAction(input);
+        } if (input.getType().equals("back")) {
+            return new BackAction(input);
+        } if (input.getType().equals("subscribe")) {
+            return new SubscribeAction(input);
         }
 
         return null;

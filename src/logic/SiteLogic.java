@@ -154,5 +154,7 @@ public final class SiteLogic {
             Movie currentMovie = newUser.getRatedMovies().get(j);
             currentMovie.movieOutput(ratedArrayNode);
         }
+        ArrayNode notificationsArrayNode = userNode.putArray("notifications");
+
     }
 }

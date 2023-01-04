@@ -31,8 +31,8 @@ public class ChangePageAction extends Action {
         for (int i = 0; i < currentPage.getPagesAccessible().size(); i++) {
             if (newPage.getPageName().equals(pagesAccessible.get(i))) {
                 siteLogic.setCurrentPage(newPage);
+                User currentUser = SiteLogic.getInstance().getCurrentUser();
                 if (newPage.getPageName().equals("movies")) {
-                    User currentUser = SiteLogic.getInstance().getCurrentUser();
                     for (int j = 0; j < Database.getInstance().getMovies().size(); j++) {
                         Movie currentMovie = Database.getInstance().getMovies().get(j);
                         if (!currentMovie.getCountriesBanned().contains(currentUser.getCountry())) {
@@ -41,10 +41,13 @@ public class ChangePageAction extends Action {
                     }
                     SiteLogic.getInstance().showOutput();
                 }
+                // add in the user's stack the accessed page each time
+                if (currentUser != null) {
+                    currentUser.getVisitedPagesStack().push(currentPage.getPageName());
+                }
                 return;
             }
         }
-
         SiteLogic.getInstance().showErrorOutput();
     }
 }

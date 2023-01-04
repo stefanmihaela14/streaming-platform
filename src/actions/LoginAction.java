@@ -44,12 +44,11 @@ public class LoginAction extends Action {
                 siteLogic.setCurrentPage(newPage);
                 siteLogic.setCurrentUser(database.getUsers().get(i));
 
-                //show good output
                 SiteLogic.getInstance().showOutput();
                 return;
             }
         }
-        // if username not found throw error and go on unauthenticated page
+
         SiteLogic.getInstance().showErrorOutput();
 
         Page newPage = PageFactory.createNew("unauthenticatedPage");
