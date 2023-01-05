@@ -44,8 +44,12 @@ public final class ActionFactory {
             return new ChangePageAction(input);
         } if (input.getType().equals("back")) {
             return new BackAction(input);
-        } if (input.getType().equals("subscribe")) {
+        } if (input.getType().equals("on page") && input.getFeature().equals("subscribe")) {
             return new SubscribeAction(input);
+        } if (input.getType().equals("database") && input.getFeature().equals("add")) {
+            return new DatabaseAddAction(input);
+        } if (input.getType().equals("database") && input.getFeature().equals("delete")) {
+            return new DatabaseDeleteAction(input);
         }
 
         return null;

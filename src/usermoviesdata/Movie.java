@@ -40,7 +40,7 @@ public class Movie {
     public void movieOutput(final ArrayNode arrayNode) {
         ObjectNode newMovieNode = arrayNode.addObject();
         newMovieNode.put("name", this.getName());
-        newMovieNode.put("year", this.getYear());
+        newMovieNode.put("year", Integer.toString(this.getYear()));
         newMovieNode.put("duration", this.getDuration());
         ArrayNode genresArray = newMovieNode.putArray("genres");
         for (int k = 0; k < this.getGenres().size(); k++) {

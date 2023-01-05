@@ -3,9 +3,12 @@ package actions;
 import datainput.ActionsInput;
 import logic.SiteLogic;
 import pages.Page;
+import usermoviesdata.Movie;
 import usermoviesdata.User;
 
-public class SubscribeAction extends Action{
+import java.util.ArrayList;
+
+public class SubscribeAction extends Action {
     public SubscribeAction(final ActionsInput input) {
         super(input);
     }
@@ -21,6 +24,31 @@ public class SubscribeAction extends Action{
             return;
         }
 
-        currentPage.getMovieList().get(0).getName();
+        Movie currentMovie = currentPage.getMovieList().get(0);
+        ArrayList<String> genres = new ArrayList<>();
+
+        boolean foundGenre = false;
+        for (int i = 0; i < currentMovie.getGenres().size(); i++) {
+            String currentGenreName = currentMovie.getGenres().get(i);
+            genres.add(currentMovie.getGenres().get(i));
+            if (currentGenreName.equals(subscribedGenre)) {
+                foundGenre = true;
+                break;
+            }
+        }
+        if (!foundGenre) {
+            site.showErrorOutput();
+            return;
+        }
+
+        if (currentUser.getSubscribedGenre().contains(subscribedGenre)) {
+            site.showErrorOutput();
+            return;
+        }
+
+        // if there wasn't any error we add the subscribed genre to the user's genre list
+        currentUser.getSubscribedGenre().add(subscribedGenre);
+
+        site.getDatabase().addObserver(currentUser);
     }
 }

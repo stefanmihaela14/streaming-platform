@@ -20,6 +20,8 @@ public class User {
 
     private LinkedList<String> visitedPagesStack = new LinkedList<>();
 
+    private ArrayList<String> subscribedGenre = new ArrayList<String>();
+
     private int tokensCount = 0;
     private int numFreePremiumMovies = NUM_FREE_MOVIES_START;
     private ArrayList<Movie> purchasedMovies = new ArrayList<>();
@@ -42,5 +44,14 @@ public class User {
         this.country = user.getCredentials().getCountry();
         this.accountType = user.getCredentials().getAccountType();
         this.balance = user.getCredentials().getBalance();
+    }
+
+    public void updateAboutNewMovie(Movie movie) {
+        for (String genre: subscribedGenre) {
+            if (movie.getGenres().contains(genre) && !movie.getCountriesBanned().contains(country)) {
+                notifications.add(new Notification(movie.getName(), "ADD"));
+                return;
+            }
+        }
     }
 }

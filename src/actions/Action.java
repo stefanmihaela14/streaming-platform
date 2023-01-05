@@ -4,6 +4,7 @@ import datainput.ActionsInput;
 import datainput.CredentialsInput;
 import datainput.FiltersInput;
 import logic.SiteLogic;
+import usermoviesdata.Movie;
 
 /*
  * Parent class for the other actions
@@ -22,6 +23,8 @@ public abstract class Action {
 
     protected String subscribedGenre;
 
+    protected Movie addedMovie;
+
     public Action(final ActionsInput input) {
         type = input.getType();
         page = input.getPage();
@@ -34,6 +37,9 @@ public abstract class Action {
         rate = input.getRate();
         count = input.getCount();
         subscribedGenre = input.getSubscribedGenre();
+        if (input.getAddedMovie() != null) {
+            addedMovie = new Movie(input.getAddedMovie());
+        }
     }
 
     /**

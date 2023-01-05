@@ -15,7 +15,11 @@ public final class Database {
     @Getter
     private ArrayList<User> users = new ArrayList<User>();
     @Getter
-    private ArrayList<Movie> movies = new ArrayList<Movie>();
+    private ArrayList<Movie> movies = new ArrayList<Movie>(); //pt observer
+
+    @Getter
+    @Setter
+    private ArrayList<User> notificationUsers = new ArrayList<>(); //pt observer
 
 
     /**
@@ -53,5 +57,16 @@ public final class Database {
      */
     public void addMovie(final Movie movie) {
         movies.add(movie);
+
+        for (User user : this.notificationUsers) {
+            user.updateAboutNewMovie(movie);
+        }
+    }
+
+    public void addObserver(User user) {
+        if (notificationUsers.contains(user)) {
+            return;
+        }
+        notificationUsers.add(user);
     }
 }

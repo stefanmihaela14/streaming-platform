@@ -15,6 +15,4 @@ public class MovieInput {
     private ArrayList<String> genres;
     private ArrayList<String> actors;
     private ArrayList<String> countriesBanned;
-
-
 }

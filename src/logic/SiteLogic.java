@@ -1,6 +1,7 @@
 package logic;
 
 import usermoviesdata.Movie;
+import usermoviesdata.Notification;
 import usermoviesdata.User;
 import actions.Action;
 import actions.ActionFactory;
@@ -31,6 +32,8 @@ public final class SiteLogic {
     @Setter
     private User currentUser;
 
+    @Getter
+    @Setter
     private Database database;
 
     private static SiteLogic instance;
@@ -155,6 +158,9 @@ public final class SiteLogic {
             currentMovie.movieOutput(ratedArrayNode);
         }
         ArrayNode notificationsArrayNode = userNode.putArray("notifications");
-
+        for (int j = 0; j < newUser.getNotifications().size(); j++) {
+            Notification currentNotification = newUser.getNotifications().get(j);
+            currentNotification.notificationOutput(notificationsArrayNode);
+        }
     }
 }
