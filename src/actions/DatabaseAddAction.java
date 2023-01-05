@@ -13,6 +13,12 @@ public class DatabaseAddAction extends Action {
 
     @Override
     public void doAction(SiteLogic site) {
-       site.getDatabase().addMovie(addedMovie);
+        for (Movie movie : site.getDatabase().getMovies()) {
+            if (movie.getName().equals(addedMovie.getName())) {
+                site.showErrorOutput();
+                return;
+            }
+        }
+        site.getDatabase().addMovie(addedMovie);
     }
 }

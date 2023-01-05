@@ -183,14 +183,14 @@ public final class SiteLogic {
             }
         }
 
-        ArrayList<Genre> sortedGenresAscending = new ArrayList<>();
+        ArrayList<Genre> sortedGenresDescending = new ArrayList<>();
 
         for (Map.Entry<String, Integer> entry : userLikedGenres.entrySet()) {
             Genre newGenre = new Genre(entry.getKey(), entry.getValue());
-            sortedGenresAscending.add(newGenre);
+            sortedGenresDescending.add(newGenre);
         }
 
-        sortedGenresAscending.sort((m1, m2) -> {
+        sortedGenresDescending.sort((m1, m2) -> {
             if (m1.numOfLikes == m2.numOfLikes) {
                 return m1.genreName.compareTo(m2.genreName);
             } else {
@@ -198,6 +198,71 @@ public final class SiteLogic {
             }
         });
 
-        
+        getDatabase().getMovies().sort((m1, m2) -> {
+                return m2.getNumLikes() - m1.getNumLikes();
+        });
+
+        for (Genre genre : sortedGenresDescending) {
+            for (Movie movie : getDatabase().getMovies()) {
+                if (movie.getGenres().contains(genre.genreName) &&
+                        !movie.getCountriesBanned().contains(currentUser.getCountry()) &&
+                        !currentUser.getWatchedMovies().contains(movie)) {
+                    currentUser.getNotifications().add(new Notification(movie.getName(), "Recommendation"));
+                    showRecommendationOutput();
+                    return;
+                }
+            }
+        }
+        currentUser.getNotifications().add(new Notification("No recommendation", "Recommendation"));
+        showRecommendationOutput();
+        return;
+    }
+
+    public void showRecommendationOutput() {
+        User newUser = currentUser;
+
+        String username = currentUser.getName();
+        String password = currentUser.getPassword();
+        String country = currentUser.getCountry();
+        String accountType = currentUser.getAccountType();
+        int balance = currentUser.getBalance();
+
+        ObjectNode newNode = SiteLogic.getInstance().getOutput().addObject();
+        newNode.putNull("error");
+        newNode.putNull("currentMoviesList");
+        ObjectNode userNode = newNode.putObject("currentUser");
+        ObjectNode credentialsNode = userNode.putObject("credentials");
+        credentialsNode.put("name", username);
+        credentialsNode.put("password", password);
+        credentialsNode.put("accountType", accountType);
+        credentialsNode.put("country", country);
+        credentialsNode.put("balance", String.valueOf(balance));
+        userNode.put("tokensCount", newUser.getTokensCount());
+        userNode.put("numFreePremiumMovies", newUser.getNumFreePremiumMovies());
+        ArrayNode purchasedArrayNode = userNode.putArray("purchasedMovies");
+        for (int j = 0; j < newUser.getPurchasedMovies().size(); j++) {
+            Movie currentMovie = newUser.getPurchasedMovies().get(j);
+            currentMovie.movieOutput(purchasedArrayNode);
+        }
+        ArrayNode watchedArrayNode = userNode.putArray("watchedMovies");
+        for (int j = 0; j < newUser.getWatchedMovies().size(); j++) {
+            Movie currentMovie = newUser.getWatchedMovies().get(j);
+            currentMovie.movieOutput(watchedArrayNode);
+        }
+        ArrayNode likedArrayNode = userNode.putArray("likedMovies");
+        for (int j = 0; j < newUser.getLikedMovies().size(); j++) {
+            Movie currentMovie = newUser.getLikedMovies().get(j);
+            currentMovie.movieOutput(likedArrayNode);
+        }
+        ArrayNode ratedArrayNode = userNode.putArray("ratedMovies");
+        for (int j = 0; j < newUser.getRatedMovies().size(); j++) {
+            Movie currentMovie = newUser.getRatedMovies().get(j);
+            currentMovie.movieOutput(ratedArrayNode);
+        }
+        ArrayNode notificationsArrayNode = userNode.putArray("notifications");
+        for (int j = 0; j < newUser.getNotifications().size(); j++) {
+            Notification currentNotification = newUser.getNotifications().get(j);
+            currentNotification.notificationOutput(notificationsArrayNode);
+        }
     }
 }
