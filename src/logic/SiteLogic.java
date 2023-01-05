@@ -17,6 +17,8 @@ import pages.Page;
 import pages.PageFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class SiteLogic {
     @Getter
@@ -88,6 +90,9 @@ public final class SiteLogic {
                 continue;
             }
             receiveAction(newAction);
+        }
+        if (currentUser != null && currentUser.getAccountType().equals("premium")) {
+            showRecommendation(currentUser);
         }
     }
 
@@ -162,5 +167,37 @@ public final class SiteLogic {
             Notification currentNotification = newUser.getNotifications().get(j);
             currentNotification.notificationOutput(notificationsArrayNode);
         }
+    }
+
+    public void showRecommendation(User user) {
+        HashMap<String, Integer> userLikedGenres = new HashMap<>();
+
+        for (Movie movie : user.getLikedMovies()) {
+            for (String genre : movie.getGenres()) {
+                if (userLikedGenres.containsKey(genre)) {
+                    int oldValue = userLikedGenres.get(genre);
+                    userLikedGenres.put(genre,oldValue + 1);
+                } else {
+                    userLikedGenres.put(genre, 1);
+                }
+            }
+        }
+
+        ArrayList<Genre> sortedGenresAscending = new ArrayList<>();
+
+        for (Map.Entry<String, Integer> entry : userLikedGenres.entrySet()) {
+            Genre newGenre = new Genre(entry.getKey(), entry.getValue());
+            sortedGenresAscending.add(newGenre);
+        }
+
+        sortedGenresAscending.sort((m1, m2) -> {
+            if (m1.numOfLikes == m2.numOfLikes) {
+                return m1.genreName.compareTo(m2.genreName);
+            } else {
+                return m2.numOfLikes - m1.numOfLikes;
+            }
+        });
+
+        
     }
 }

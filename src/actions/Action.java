@@ -20,10 +20,9 @@ public abstract class Action {
     protected FiltersInput filters;
     protected int rate;
     protected int count;
-
     protected String subscribedGenre;
-
     protected Movie addedMovie;
+    protected String deletedMovie;
 
     public Action(final ActionsInput input) {
         type = input.getType();
@@ -39,6 +38,9 @@ public abstract class Action {
         subscribedGenre = input.getSubscribedGenre();
         if (input.getAddedMovie() != null) {
             addedMovie = new Movie(input.getAddedMovie());
+        }
+        if (input.getDeletedMovie() != null) {
+            deletedMovie = input.getDeletedMovie();
         }
     }
 

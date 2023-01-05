@@ -20,5 +20,4 @@ public class ActionsInput {
     private String subscribedGenre;
     private MovieInput addedMovie;
     private String deletedMovie;
-
 }

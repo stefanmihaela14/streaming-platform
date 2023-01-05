@@ -63,6 +63,26 @@ public final class Database {
         }
     }
 
+    public void deleteMovie(final String movieName) {
+        Movie movie = null;
+        for (Movie currentMovie : movies) {
+            if (currentMovie.getName().equals(movieName)) {
+                movie = currentMovie;
+                break;
+            }
+        }
+
+        if (movie == null) {
+            return;
+        }
+
+        movies.remove(movie);
+
+        for (User user : this.notificationUsers) {
+            user.updateAboutDeletedMovie(movie);
+        }
+    }
+
     public void addObserver(User user) {
         if (notificationUsers.contains(user)) {
             return;

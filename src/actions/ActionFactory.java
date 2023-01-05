@@ -42,13 +42,13 @@ public final class ActionFactory {
             return new RateAction(input);
         } else if (input.getType().equals("change page")) {
             return new ChangePageAction(input);
-        } if (input.getType().equals("back")) {
+        } else if (input.getType().equals("back")) {
             return new BackAction(input);
-        } if (input.getType().equals("on page") && input.getFeature().equals("subscribe")) {
+        } else if (input.getType().equals("on page") && input.getFeature().equals("subscribe")) {
             return new SubscribeAction(input);
-        } if (input.getType().equals("database") && input.getFeature().equals("add")) {
+        } else if (input.getType().equals("database") && input.getFeature().equals("add")) {
             return new DatabaseAddAction(input);
-        } if (input.getType().equals("database") && input.getFeature().equals("delete")) {
+        } else if (input.getType().equals("database") && input.getFeature().equals("delete")) {
             return new DatabaseDeleteAction(input);
         }
 

@@ -36,22 +36,29 @@ public class RateAction extends Action {
             site.showErrorOutput();
             return;
         }
-        if (currentUser.getRatedMovies().contains(currentPage.getMovieList().get(0))) {
-            site.showErrorOutput();
-            return;
-        }
+
         if (rate > MAX_RATE || rate < 0) {
             site.showErrorOutput();
             return;
         }
+
+        String currentMovieName = currentPage.getMovieList().get(0).getName();
+
         Movie currentMovie = currentPage.getMovieList().get(0);
+
+        if (currentUser.getRatedMovies().contains(currentPage.getMovieList().get(0))) {
+            currentPage.getMovieList().get(0).getRatingsList().remove(currentUser.getUserRatedMovies().get(currentMovieName));
+        } else {
+            currentMovie.setNumRatings(currentMovie.getNumRatings() + 1);
+            currentUser.getRatedMovies().add(currentMovie);
+        }
+
+        currentUser.getUserRatedMovies().put(currentMovieName, rate);
+
         currentMovie.getRatingsList().add(rate);
-        currentUser.getRatedMovies().add(currentMovie);
-        currentMovie.setNumRatings(currentMovie.getNumRatings() + 1);
         AtomicInteger sum = new AtomicInteger();
         currentMovie.getRatingsList().forEach((integer -> {
             sum.set(sum.get() + integer); }));
-
         currentMovie.setRating((double) sum.get() / (double) currentMovie.getNumRatings());
         site.showOutput();
     }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 @Setter
@@ -15,13 +16,9 @@ public class User {
     private String accountType;
     private String country;
     private int balance;
-
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
-
     private LinkedList<String> visitedPagesStack = new LinkedList<>();
-
     private ArrayList<String> subscribedGenre = new ArrayList<String>();
-
     private int tokensCount = 0;
     private int numFreePremiumMovies = NUM_FREE_MOVIES_START;
     private ArrayList<Movie> purchasedMovies = new ArrayList<>();
@@ -29,6 +26,7 @@ public class User {
     private ArrayList<Movie> likedMovies = new ArrayList<>();
     private ArrayList<Movie> ratedMovies = new ArrayList<>();
 
+    private HashMap<String, Integer> userRatedMovies = new HashMap<>();
 
     public User(final String name, final String password, final String country,
                 final String accountType, final int balance) {
@@ -53,5 +51,10 @@ public class User {
                 return;
             }
         }
+    }
+
+    public void updateAboutDeletedMovie(Movie movie) {
+                notifications.add(new Notification(movie.getName(), "DELETE"));
+                return;
     }
 }
