@@ -1,10 +1,15 @@
 package logic;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Genre {
-    String genreName;
-    int numOfLikes;
+    private String genreName;
+    private int numOfLikes;
 
-    public Genre(String genreName, int numOfLikes) {
+
+    public Genre(final String genreName, final int numOfLikes) {
         this.genreName = genreName;
         this.numOfLikes = numOfLikes;
     }

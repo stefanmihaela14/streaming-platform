@@ -44,16 +44,17 @@ public class User {
         this.balance = user.getCredentials().getBalance();
     }
 
-    public void updateAboutNewMovie(Movie movie) {
+    public void updateAboutNewMovie(final Movie movie) {
         for (String genre: subscribedGenre) {
-            if (movie.getGenres().contains(genre) && !movie.getCountriesBanned().contains(country)) {
+            if (movie.getGenres().contains(genre)
+                    && !movie.getCountriesBanned().contains(country)) {
                 notifications.add(new Notification(movie.getName(), "ADD"));
                 return;
             }
         }
     }
 
-    public void updateAboutDeletedMovie(Movie movie) {
+    public void updateAboutDeletedMovie(final Movie movie) {
                 notifications.add(new Notification(movie.getName(), "DELETE"));
                 return;
     }

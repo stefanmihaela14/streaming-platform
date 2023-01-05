@@ -14,7 +14,7 @@ public class SubscribeAction extends Action {
     }
 
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
         User currentUser = site.getCurrentUser();
         Page currentPage = site.getCurrentPage();

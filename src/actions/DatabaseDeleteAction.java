@@ -11,7 +11,7 @@ public class DatabaseDeleteAction extends Action {
     }
 
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         //verify is the movie exists
         Movie movie = null;
         for (Movie currentMovie : site.getDatabase().getMovies()) {
@@ -43,10 +43,12 @@ public class DatabaseDeleteAction extends Action {
 
         //give the money back to people
         for (User currentUser : site.getDatabase().getUsers()) {
-            if (currentUser.getAccountType().equals("standard") && currentUser.getPurchasedMovies().contains(movie)) {
+            if (currentUser.getAccountType().equals("standard")
+                    && currentUser.getPurchasedMovies().contains(movie)) {
                 int userTokens = currentUser.getTokensCount();
                 currentUser.setTokensCount(userTokens + 2);
-            } else if (currentUser.getAccountType().equals("premium") && currentUser.getPurchasedMovies().contains(movie)) {
+            } else if (currentUser.getAccountType().equals("premium")
+                    && currentUser.getPurchasedMovies().contains(movie)) {
                 int userFreeMovies = currentUser.getNumFreePremiumMovies();
                 currentUser.setNumFreePremiumMovies(userFreeMovies + 1);
             }

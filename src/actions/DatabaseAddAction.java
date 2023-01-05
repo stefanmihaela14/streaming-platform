@@ -1,7 +1,6 @@
 package actions;
 
 import datainput.ActionsInput;
-import logic.Database;
 import logic.SiteLogic;
 import usermoviesdata.Movie;
 
@@ -12,7 +11,7 @@ public class DatabaseAddAction extends Action {
 
 
     @Override
-    public void doAction(SiteLogic site) {
+    public void doAction(final SiteLogic site) {
         for (Movie movie : site.getDatabase().getMovies()) {
             if (movie.getName().equals(addedMovie.getName())) {
                 site.showErrorOutput();

@@ -83,7 +83,7 @@ public final class Database {
         }
     }
 
-    public void addObserver(User user) {
+    public void addObserver(final User user) {
         if (notificationUsers.contains(user)) {
             return;
         }

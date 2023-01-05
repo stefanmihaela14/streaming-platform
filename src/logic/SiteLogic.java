@@ -169,14 +169,14 @@ public final class SiteLogic {
         }
     }
 
-    public void showRecommendation(User user) {
+    public void showRecommendation(final User user) {
         HashMap<String, Integer> userLikedGenres = new HashMap<>();
 
         for (Movie movie : user.getLikedMovies()) {
             for (String genre : movie.getGenres()) {
                 if (userLikedGenres.containsKey(genre)) {
                     int oldValue = userLikedGenres.get(genre);
-                    userLikedGenres.put(genre,oldValue + 1);
+                    userLikedGenres.put(genre, oldValue + 1);
                 } else {
                     userLikedGenres.put(genre, 1);
                 }
@@ -191,10 +191,10 @@ public final class SiteLogic {
         }
 
         sortedGenresDescending.sort((m1, m2) -> {
-            if (m1.numOfLikes == m2.numOfLikes) {
-                return m1.genreName.compareTo(m2.genreName);
+            if (m1.getNumOfLikes() == m2.getNumOfLikes()) {
+                return m1.getGenreName().compareTo(m2.getGenreName());
             } else {
-                return m2.numOfLikes - m1.numOfLikes;
+                return m2.getNumOfLikes() - m1.getNumOfLikes();
             }
         });
 
@@ -204,9 +204,9 @@ public final class SiteLogic {
 
         for (Genre genre : sortedGenresDescending) {
             for (Movie movie : getDatabase().getMovies()) {
-                if (movie.getGenres().contains(genre.genreName) &&
-                        !movie.getCountriesBanned().contains(currentUser.getCountry()) &&
-                        !currentUser.getWatchedMovies().contains(movie)) {
+                if (movie.getGenres().contains(genre.getGenreName())
+                        && !movie.getCountriesBanned().contains(currentUser.getCountry())
+                        && !currentUser.getWatchedMovies().contains(movie)) {
                     currentUser.getNotifications().add(new Notification(movie.getName(), "Recommendation"));
                     showRecommendationOutput();
                     return;
