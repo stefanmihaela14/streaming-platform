@@ -44,7 +44,11 @@ public class User {
         this.balance = user.getCredentials().getBalance();
     }
 
-    public void updateAboutNewMovie(final Movie movie) {
+    /**
+     * Check the conditions for sending the update.
+     * @param movie that has been added
+     */
+    public final void updateAboutNewMovie(final Movie movie) {
         for (String genre: subscribedGenre) {
             if (movie.getGenres().contains(genre)
                     && !movie.getCountriesBanned().contains(country)) {
@@ -54,7 +58,11 @@ public class User {
         }
     }
 
-    public void updateAboutDeletedMovie(final Movie movie) {
+    /**
+     * Sending the notification.
+     * @param movie that has been deleted
+     */
+    public final void updateAboutDeletedMovie(final Movie movie) {
                 notifications.add(new Notification(movie.getName(), "DELETE"));
                 return;
     }

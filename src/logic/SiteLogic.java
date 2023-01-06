@@ -169,6 +169,10 @@ public final class SiteLogic {
         }
     }
 
+    /**
+     * output for recommendation
+     * @param user the user that will be shown the recomandetion
+     */
     public void showRecommendation(final User user) {
         HashMap<String, Integer> userLikedGenres = new HashMap<>();
 

@@ -15,7 +15,7 @@ public class BackAction extends Action {
     }
 
     @Override
-    public void doAction(final SiteLogic site) {
+    public final void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();
         User currentUser = site.getCurrentUser();
 

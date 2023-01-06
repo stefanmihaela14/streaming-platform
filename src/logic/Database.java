@@ -63,6 +63,10 @@ public final class Database {
         }
     }
 
+    /**
+     * Find the movie in the database and delete it.
+     * @param movieName name of the movie to be deleted
+     */
     public void deleteMovie(final String movieName) {
         Movie movie = null;
         for (Movie currentMovie : movies) {
@@ -83,6 +87,10 @@ public final class Database {
         }
     }
 
+    /**
+     * Adding and user to the array of users that will be notified
+     * @param user the user to be notified
+     */
     public void addObserver(final User user) {
         if (notificationUsers.contains(user)) {
             return;

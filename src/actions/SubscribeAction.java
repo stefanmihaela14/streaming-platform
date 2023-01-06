@@ -13,6 +13,11 @@ public class SubscribeAction extends Action {
         super(input);
     }
 
+    /**
+     * Implement the logic for subscribing to a movie genre.
+     * Verify if the action can be done.
+     * @param site the object which is being modified
+     */
     @Override
     public void doAction(final SiteLogic site) {
         String name = site.getCurrentPage().getPageName();

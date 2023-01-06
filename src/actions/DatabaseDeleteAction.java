@@ -10,6 +10,13 @@ public class DatabaseDeleteAction extends Action {
         super(input);
     }
 
+    /**
+     * Implement the logic for deleting a movie from the database.
+     * Verify if the action can be done.
+     * Delete the movie from all of user's lists (Purchased/liked/rated etc.)
+     * Gave the tokens/number of free premium movies back.
+     * @param site the object which is being modified
+     */
     @Override
     public void doAction(final SiteLogic site) {
         //verify is the movie exists

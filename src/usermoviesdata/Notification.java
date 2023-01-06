@@ -15,7 +15,11 @@ public class Notification {
         this.message = message;
     }
 
-    public void notificationOutput(final ArrayNode arrayNode) {
+    /**
+     * Output for notifications
+     * @param arrayNode to write the output for notifications
+     */
+    public final void notificationOutput(final ArrayNode arrayNode) {
         ObjectNode newNotificationNode = arrayNode.addObject();
         newNotificationNode.put("movieName", this.movieName);
         newNotificationNode.put("message", this.message);
