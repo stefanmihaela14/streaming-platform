@@ -1,0 +1,103 @@
+                            Stefan Mihaela 322CA
+
+                                    POO TV
+
+-------------------------------------------------------------------------------
+                             DESIGN PATTERNS USED:
+- Singleton for the database.
+- Factory for turning each actionInput into the wanted action.
+- Visitor for a better modularization of the code.
+- Observer for notifications.
+
+(explained better why and how they were used below)
+
+-------------------------------------------------------------------------------
+                                   PART ONE
+-------------------------------------------------------------------------------
+
+The input data is read from the JSON using Jackson and put into objects (the
+Input object contains all the others auxilary objects for actions,
+credentials, users, movies). The implementation is similar with the one in the
+first OOP homework.
+
+To show errors and the wanted outputs for user and movies I add a new
+ObjectNode to the initial ArrayNode, containing the information.
+
+
+-------------------------------------------------------------------------------
+                        The logic of the application:
+
+I start from SiteLogic where I keep the current user, current page and where I
+add data in the database. I made it Singleton because I only need one instance
+contining the previous information and where I run the actions received.
+
+The Database is Singleton because I don't need more than one instance of it
+and to be easier to acces in the project.  
+
+The 'actions' package contains the logic for the actions. I used Factory
+pattern to turn each action input into a specific visitor object. I have the
+Action class with an empty method doAction that I overwrite in the specific
+action classes, using Visitor Pattern. Instead of having all the functions in 
+SiteLogic, for a better moduarization of the code I have separate classes for 
+all of the actions. In change page the change page to movie
+is done separately because is a little more complex. The logic of each action
+is explained in each class in the JavaDocs.
+
+In the package 'pages' I have the Page class that contains the page name, an
+array with the accessible pages and one with the movies. This class is
+extended by all the other pages with each one's specific information.
+
+In 'usermoviedata' (sorry for the name, I wanted to make two packages, but it
+seemed wierd to only contain one class) I take the data from movie/user Input
+and make each movie/user object. I build the output for user/movie for when
+it's needed. 
+
+-------------------------------------------------------------------------------
+                                   PART TWO
+-------------------------------------------------------------------------------
+
+Functionalities added:
+
+- Subscribe: added a list of subscribedGenres in the user class and in the 
+subscribeAction class verify the conditions for the user to subscribe to the 
+genre and do the action. 
+
+- Back: I used a stack for every user to save all the pages that they have 
+accessed. To go back I change the current page of the user with the last page 
+added to the stack and then take it out of the stack. 
+
+- AddMovie: add a movie to the database, firstly verifying if it's not already 
+in it, then adding it and when the function addMovie is called calling the 
+updateAboutNewMovie method form the Database class to notify the users.
+
+- DeleteMovie: similar to addMovie, but deleting one from the database and 
+giving the users their tokens/number of free premium movies back and again 
+notifying the users of the movie deleted.
+
+- Sending notifications for:
+
+    * when a movie is added to all the users that follow one of its genres.
+
+    * when a movie is deleted to all the users that had purchased the movie.
+
+    * for the premium users with a recommendation of a movie. (the algorithm 
+for choosing what movie to recommend: made a dictionary of genres and number of
+likes for each genre -> sorting the dictionary decreasing after the likes and
+after the name if necessary -> make it an array of only genres -> sort all 
+the movies in the database by the number of likes -> verifying if the first 
+movie in the database contains the first genre of that user and showing the 
+output)   
+
+I used the Observation design pattern, the observers are the users (the list of
+users that have subscribed to a Genre) and the observed is the database, here 
+in the database I added the addObserver method for the pattern. 
+
+-------------------------------------------------------------------------------
+Notes: I think I've finally understood why good comments and JavaDocs are vital
+after 3 weeks of not looking over my code I had the surprise of gettring lost 
+in it at first. I did like the idea of a project instead of two separate 
+homeworks, I think it would have been even more interesting if, instead of the 
+first homework, we had a third part to implement a frontend for our 
+application. And it was a bit weierd that some fthings chinged in the second 
+part like the year from integer to string, it was a bit confusing and I didn't 
+see why it was necessary. But overall cool project idea.
